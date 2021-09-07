@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @Entity
 public class Misconduct extends BaseModel{
+    private String firstName;
+    private String lastName;
     private String subject;
     private String description;
     private enum status{

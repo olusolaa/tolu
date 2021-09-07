@@ -5,9 +5,11 @@ import com.ems.employeemanagementsystem.Models.Employee;
 import com.ems.employeemanagementsystem.Models.Expense;
 import com.ems.employeemanagementsystem.RequestEntities.ExpenseRequest;
 import com.ems.employeemanagementsystem.Services.ExpenseService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ExpenseServiceImpl implements ExpenseService {
 
     @Override

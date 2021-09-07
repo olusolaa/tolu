@@ -16,7 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Payroll extends BaseModel{
-    private String name;
+    private String firstName;
+    private String lastName;
     private String description;
     private enum status{
         PAID, UNPAID
