@@ -26,13 +26,9 @@ public class Users extends BaseModel{
     private String address;
     private String phone;
     private String pin;
-    private enum gender {
-        MALE, FEMALE, OTHERS
-    }
-    private enum role{
-        JUNIOR, SENIOR, MANAGEMENT
-    }
+    private UserEnum userEnum;
     private  Long Salary;
+    private boolean activated;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Vacation> vacations;

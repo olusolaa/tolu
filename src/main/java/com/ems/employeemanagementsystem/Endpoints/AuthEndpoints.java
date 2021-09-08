@@ -1,5 +1,6 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
+import com.ems.employeemanagementsystem.Exceptions.UserUnauthorised;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.RequestEntities.LoginRequest;
 import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;
@@ -31,6 +32,9 @@ public class AuthEndpoints {
 
         if(users == null){
             throw new UserPrincipalNotFoundException("User details not correct");
+        }
+        if (!users.isActivated()) {
+            throw new UserUnauthorised("Account Inactive, Please contact Admin");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(users);

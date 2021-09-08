@@ -1,5 +1,6 @@
 package com.ems.employeemanagementsystem.Services.ServiceImplementation;
 
+import com.ems.employeemanagementsystem.Models.UserEnum;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
         users.setPassword(signupRequest.getPassword());
         users.setPhone(signupRequest.getPhone());
         users.setPin(signupRequest.getPin());
+        users.setUserEnum(UserEnum.ADMIN);
 
        return userRepository.save(users);
 
