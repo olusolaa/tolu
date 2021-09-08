@@ -3,6 +3,7 @@ package com.ems.employeemanagementsystem.Services.ServiceImplementation;
 import com.ems.employeemanagementsystem.Models.UserEnum;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
+import com.ems.employeemanagementsystem.RequestEntities.ActivateRequest;
 import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;
 import com.ems.employeemanagementsystem.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,13 @@ public class UserServiceImpl implements UserService {
 
        return userRepository.save(users);
 
+    }
+
+    public Users activateUser(ActivateRequest activateRequest, Long id) {
+//        Users users = new Users();
+        Users users = userRepository.getById(id);
+        users.setActivated(true);
+        return userRepository.save(users);
     }
 
     @Override
