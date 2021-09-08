@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SalaryRepository extends JpaRepository<Salary, Long> {
     Salary findSalaryByAmount(Long amount);
     Salary findSalaryByUsers(Users users);
-    Salary findById();
-    Void deleteSalariesByUsers();
-    Void deleteById();
+    Salary deleteSalariesByUsers(Users users);
+
 
 }

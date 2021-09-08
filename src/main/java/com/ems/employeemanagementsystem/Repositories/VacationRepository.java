@@ -12,7 +12,4 @@ public interface VacationRepository extends JpaRepository<Vacation, Long> {
     Vacation findVacationByTitle(String title);
     Vacation findVacationByDuration(Long duration);
     Void deleteVacationByUsers(Users users);
-    Void deleteVacationById(Long id);
-    Vacation createVacation(TaskRequest taskRequest);
-    Optional<Vacation> findById(Long id);
 }

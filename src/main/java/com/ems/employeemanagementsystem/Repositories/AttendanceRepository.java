@@ -13,7 +13,5 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
     Attendance findAllById(Long id);
     Attendance findAttendanceByDateTime(LocalDateTime time);
     Attendance findAttendanceByTime(LocalTime time);
-    Optional<Attendance> findById();
-    Void deleteByUsers();
-    Void deleteById();
+    Void deleteByUsers(Users users);
 }

@@ -8,8 +8,7 @@ import java.util.Optional;
 
 public interface MisconductRepository extends JpaRepository<Misconduct,Long> {
     Misconduct findMisconductByUsers(Users users);
-    Misconduct findAllById();
-    Misconduct findMisconductByFirstName(String firstName);
-    Optional<Misconduct> findById();
-    Void deleteByUsers();
+    Misconduct findAllById(Long id);
+    Misconduct findMisconductByFirstName(String firstName);;
+    Void deleteByUsers(Users users);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -44,13 +45,13 @@ public class AuthEndpoints {
 
     //method lists all created users
     @GetMapping("/all")
-    public Users getAllUsers() {
-        return userService.getAllUsers();
+    public List<Users> getAllUsers() {
+        return this.userService.getAllUsers();
     }
 
     //get User By ID
     @GetMapping("/{id}")
-    public Users getUserById (@PathVariable(value = "id") long userId) {
+    public Optional<Users> getUserById (@PathVariable(value = "id") long userId) {
         return userService.getUserById(userId);
     }
 
