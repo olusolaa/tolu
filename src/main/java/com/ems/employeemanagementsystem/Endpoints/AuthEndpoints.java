@@ -1,5 +1,9 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
+import com.ems.employeemanagementsystem.Models.Users;
+import com.ems.employeemanagementsystem.RequestEntities.LoginRequest;
+import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;
+import com.ems.employeemanagementsystem.Services.ServiceImplementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +18,15 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class Authentication {
+@RequestMapping("/auth")
+public class AuthEndpoints {
     @Autowired
-    private UsersServiceImpl usersService;
+    private UserServiceImpl userService;
 
 
     @PostMapping("/login")
     public  ResponseEntity<?> login (@RequestBody LoginRequest loginRequest) throws UserPrincipalNotFoundException {
-
-        Users users = usersService.loginByUsernameAndEmail(loginRequest.getEmailOrUsername(), loginRequest.getPassword());
+        Users users = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
 
         if(users == null){
             throw new UserPrincipalNotFoundException("User details not correct");
@@ -34,52 +37,27 @@ public class Authentication {
 
     //create a user
     @PostMapping("/create")
-    public  ResponseEntity<?> signup (@RequestBody UserRequest users){
-        Users user = usersService.signup(users);
+    public  ResponseEntity<?> signup (@RequestBody SignupRequest signupRequest){
+        Users user = userService.signup(signupRequest);
         return new ResponseEntity<>("Successful", HttpStatus.OK);
     }
 
     //method lists all created users
     @GetMapping("/all")
-    public List<Users> getAllUsers() {
-        return usersService.getAllUsers();
+    public Users getAllUsers() {
+        return userService.getAllUsers();
     }
 
     //get User By ID
     @GetMapping("/{id}")
     public Users getUserById (@PathVariable(value = "id") long userId) {
-        return usersService.getUserById(userId);
+        return userService.getUserById(userId);
     }
 
 
     @GetMapping("/getUser")
     public ResponseEntity<?> getUserByName(String name){
-        Users user = usersService.getUserByName(name);
+        Users user = userService.getUserByName(name);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
-
-
-
-
-
-//    @Autowired
-//    AuthService authService;
-//
-//    @PostMapping("/signup")
-//    public ResponseEntity<User> signup (@RequestBody LevelOneInfo levelOneInfo) {
-//        User user = authService.signup(levelOneInfo);
-//        return ResponseEntity.status(HttpStatus.OK).body(user);
-//    }
-//
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login (@RequestBody LoginRequest loginRequest) {
-//        System.out.println(loginRequest.getEmail());
-//        User user = authService.login(loginRequest.getEmail(), loginRequest.getPassword());
-//        if(user == null){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid credentials");
-//        }
-//        LoginResponse response = new LoginResponse(user.getEmail(),
-//                user.getPin(), user.getPassword(), user.getAccountNumber());
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
-//    }
 }
