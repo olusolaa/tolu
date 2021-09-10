@@ -1,5 +1,6 @@
-package com.ems.employeemanagementsystem.Models;
+package com.ems.employeemanagementsystem.ResponseBody;
 
+import com.ems.employeemanagementsystem.Models.Users;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,6 @@ import lombok.Setter;
 @Setter
 public class ResponseApi {
     @JsonIgnore
-    Users data;
+    Object data;
     String message;
 }

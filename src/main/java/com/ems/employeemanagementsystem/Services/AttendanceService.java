@@ -2,7 +2,7 @@ package com.ems.employeemanagementsystem.Services;
 
 
 import com.ems.employeemanagementsystem.Models.Attendance;
-import com.ems.employeemanagementsystem.Models.ResponseApi;
+import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Models.Users;
 
 import java.util.List;

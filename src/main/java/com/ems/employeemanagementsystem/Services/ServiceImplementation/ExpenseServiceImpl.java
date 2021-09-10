@@ -6,7 +6,9 @@ import com.ems.employeemanagementsystem.Models.Employee;
 import com.ems.employeemanagementsystem.Models.Expense;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.ExpenseRepository;
+import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.ExpenseRequest;
+import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,18 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseRepository expenseRepository;
 
     @Override
-    public Expense createExpense(ExpenseRequest expenseRequest) throws Exception {
+    public ResponseApi createExpense(ExpenseRequest expenseRequest) throws Exception {
         Expense expense = new Expense();
-        expense.setAmount(expenseRequest.getAmount());
+        ResponseApi responseApi = new ResponseApi();
         expense.setDescription(expenseRequest.getDescription());
         expense.setTitle(expenseRequest.getTitle());
-
-        return null;
+        if (expenseRequest.getAmount()<=0) {
+            responseApi.setMessage("Invalid figure");
+        } else {
+            expense.setAmount(expenseRequest.getAmount());
+        }
+        responseApi.setData(expense);
+        return responseApi;
     }
 
     //for admin

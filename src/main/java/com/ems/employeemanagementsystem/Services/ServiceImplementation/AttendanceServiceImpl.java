@@ -1,15 +1,13 @@
 package com.ems.employeemanagementsystem.Services.ServiceImplementation;
 
 import com.ems.employeemanagementsystem.Models.Attendance;
-import com.ems.employeemanagementsystem.Models.Employee;
-import com.ems.employeemanagementsystem.Models.ResponseApi;
+import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.AttendanceRepository;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.Services.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
