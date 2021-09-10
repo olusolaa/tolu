@@ -30,20 +30,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     LocalDateTime newStartDateTime;
     LocalDateTime newEndDateTime;
-//    @PutMapping("/{id}")
-//    @Override
-//    public User updateUser (@RequestBody User user, @PathVariable("id") long userId){
-//        User existingUser = getUserById(userId);
-//        existingUser.setEmail(user.getEmail());
-//        existingUser.setFirstName(user.getFirstName());
-//        existingUser.setLastName(user.getLastName());
-//        existingUser.setPassword(user.getPassword());
-//        existingUser.setPhoneNumber(user.getPhoneNumber());
-//
-//        return this.userRepository.save(existingUser);
-//
-//    }
-
 
     @Override
     public ResponseApi markAttendance(Long id) {
@@ -61,26 +47,31 @@ public class AttendanceServiceImpl implements AttendanceService {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
         newStartDateTime = LocalDateTime.parse(temp1, dateTimeFormatter);
         newEndDateTime = LocalDateTime.parse(temp2, dateTimeFormatter);
-        if (localDateTime.isBefore(newStartDateTime)){
-            response.setMessage( "Too early to mark attendance");
-        }else if (localDateTime.isAfter(newEndDateTime)){
-            response.setMessage("Too late to mark attendance");
-        }else{
-            Optional<Attendance> employeeAttendance = attendanceRepository.findByUsersAndAttendanceBetween(users, newStartDateTime, newEndDateTime);
-            if (employeeAttendance.isEmpty()) {
-                Optional<Users> usersDb = userRepository.findById(users.getId());
-                Attendance attendance = new Attendance();
-                attendance.setUsers(usersDb.get());
-                if (localTime.isBefore(LocalTime.parse("09:00:00.000", DateTimeFormatter.ofPattern("HH:mm:ss.SSS")))){
-                    attendance.setIsLate(false);
-                }
-                attendance.setLocalTime(LocalTime.now());
-                attendance.setMonthDay(MonthDay.now());
-                attendanceRepository.save(attendance);
-                response.setMessage("Attendance marked successfully");
+        if (userRepository.findById(id).isPresent()) {
+            if (localDateTime.isBefore(newStartDateTime)){
+                response.setMessage( "Too early to mark attendance");
+            }else if (localDateTime.isAfter(newEndDateTime)){
+                response.setMessage("Too late to mark attendance");
             }else{
-                response.setMessage( "Attendance already marked");
+                Optional<Attendance> employeeAttendance = attendanceRepository.findByUsersAndAttendanceBetween(users, newStartDateTime, newEndDateTime);
+
+                if (employeeAttendance.isEmpty()) {
+                    Optional<Users> usersDb = userRepository.findById(users.getId());
+                    Attendance attendance = new Attendance();
+                    attendance.setUsers(usersDb.get());
+                    if (localTime.isBefore(LocalTime.parse("09:00:00.000", DateTimeFormatter.ofPattern("HH:mm:ss.SSS")))) {
+                        attendance.setIsLate(false);
+                    }
+                    attendance.setLocalTime(LocalTime.now());
+                    attendance.setMonthDay(MonthDay.now());
+                    attendanceRepository.save(attendance);
+                    response.setMessage("Attendance marked successfully");
+                } else {
+                    response.setMessage("Attendance already marked");
+                }
             }
+        } else {
+            response.setMessage("User does not exist");
         }
         response.setData(users);
         return response;

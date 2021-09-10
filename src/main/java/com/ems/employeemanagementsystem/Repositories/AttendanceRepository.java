@@ -17,5 +17,4 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
     Optional<Attendance> findByUsersAndAttendanceBetween(Users users, LocalDateTime resumption, LocalDateTime closing);
     List<Attendance> findAllByUsers(Users users);
 
-
 }
