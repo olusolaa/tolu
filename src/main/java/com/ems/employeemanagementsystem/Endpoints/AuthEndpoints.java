@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
 public class AuthEndpoints {
     @Autowired
     private UserServiceImpl userService;
@@ -62,8 +62,8 @@ public class AuthEndpoints {
 
 
     @GetMapping("/getUser")
-    public ResponseEntity<?> getUserByName(String name){
-        Users user = userService.getUserByName(name);
+    public ResponseEntity<?> getUserByName(String firstName){
+        Users user = userService.getUserByFirstName(firstName);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }

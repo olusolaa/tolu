@@ -1,5 +1,6 @@
 package com.ems.employeemanagementsystem.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ public class Users extends BaseModel{
     @OneToMany(fetch = FetchType.LAZY)
     private List<Vacation> vacations;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Attendance> attendance;
 
     @OneToMany

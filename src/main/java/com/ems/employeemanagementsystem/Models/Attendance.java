@@ -19,13 +19,12 @@ import java.time.MonthDay;
 @NoArgsConstructor
 public class Attendance extends BaseModel {
     @CreationTimestamp
-    private LocalDateTime dateTime;
-    private boolean status;
-    private MonthDay month;
-    private LocalTime time;
+    private LocalDateTime attendance;
+
+    private MonthDay monthDay;
+    private LocalTime localTime;
+    private Boolean isLate = true;
 
     @ManyToOne
     private Users users;
-    @ManyToOne
-    private Users employee;
 }
