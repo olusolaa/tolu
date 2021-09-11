@@ -21,9 +21,7 @@ public class Misconduct extends BaseModel{
     private enum status{
         OPEN, PENDING, COMPLETED
     }
-
     private String status;
-
     @ManyToOne
     private Users users;
 }

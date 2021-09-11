@@ -42,6 +42,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             expense.setFirstName(users.getFirstName());
             expense.setLastName(users.getLastName());
             expense.setUsers(users);
+
            Expense expensedb = expenseRepository.save(expense);
         response.setMessage("The record of your Expense has been created successfully");
         response.setData(expensedb);

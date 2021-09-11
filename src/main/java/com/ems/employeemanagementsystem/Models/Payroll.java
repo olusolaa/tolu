@@ -1,5 +1,6 @@
 package com.ems.employeemanagementsystem.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,18 +19,13 @@ import java.util.List;
 public class Payroll extends BaseModel{
     private String firstName;
     private String lastName;
+    private String month;
     private String description;
-    private enum status{
-        PAID, UNPAID
-    }
-
-    private enum month{
-//        PAID, UNPAID
-    }
-
+    private Long amount;
     @OneToMany
     private List<Salary> salary;
 
+    @JsonIgnore
     @ManyToOne
     private Users users;
 }

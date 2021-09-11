@@ -10,6 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MisconductRequest {
+    private String firstName;
+    private String lastName;
     private String subject;
     private String description;
 }
