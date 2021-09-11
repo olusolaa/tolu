@@ -1,11 +1,14 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
 import com.ems.employeemanagementsystem.Models.Expense;
+import com.ems.employeemanagementsystem.Models.Misconduct;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.ExpenseRequest;
+import com.ems.employeemanagementsystem.RequestEntities.MisconductRequest;
 import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Services.ServiceImplementation.ExpenseServiceImpl;
+import com.ems.employeemanagementsystem.Services.ServiceImplementation.MisconductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,37 +21,35 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/expense")
-public class ExpenseEndpoints {
+@RequestMapping("/misconduct")
+public class MisconductEndpoint {
 
     @Autowired
-    private ExpenseServiceImpl expenseService;
+    private MisconductServiceImpl misconductService;
 
     @Autowired
     private UserRepository userRepository;
 
     @RequestMapping("/all")
-    public List<Expense> getAllExpense () {
-        List<Expense> expenseList = expenseService.listAllExpense();
-        return expenseList;
+    public List<Misconduct> getAllMisconducts () {
+        List<Misconduct> misconductList = misconductService.listAllMisconducts();
+        return misconductList;
     }
 
     @RequestMapping("/{id}")
-    public Expense getExpenseById (@PathVariable(value = "id") Long expenseId ) {
-        return this.expenseService.getExpenseById(expenseId);
+    public Misconduct getMisconductById (@PathVariable(value = "id") Long misconductId ) {
+        return this.misconductService.getMisconductById(misconductId);
     }
 
     @RequestMapping("/users/{id}")
-    public List<Expense> getExpenseByUser(@PathVariable Long id) {
-    Users users = userRepository.getById(id);
-        return this.expenseService.getExpenseByUsers(users);
+    public List<Misconduct> getMisconductByUser(@PathVariable Long id) {
+        Users users = userRepository.getById(id);
+        return this.misconductService.getMisconductByUsers(users);
     }
 
     @PostMapping("/create/{id}")
-    public ResponseEntity<ResponseApi> createExpense (@RequestBody ExpenseRequest expenseRequest, @PathVariable Long id) throws Exception {
-      ResponseApi responseApi=  expenseService.createExpense(expenseRequest, id);
-        System.out.println(responseApi.getData());
-      return ResponseEntity.status(HttpStatus.OK).body(responseApi);
+    public ResponseEntity<ResponseApi> createExpense (@RequestBody MisconductRequest misconductRequest, @PathVariable Long id) throws Exception {
+        ResponseApi responseApi=  misconductService.createMisconduct(misconductRequest, id);
+        return ResponseEntity.status(HttpStatus.OK).body(responseApi);
     }
-
 }
