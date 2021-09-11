@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
@@ -22,19 +23,29 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
-    public ResponseApi createExpense(ExpenseRequest expenseRequest) throws Exception {
+    public ResponseApi createExpense(ExpenseRequest expenseRequest, Long id) throws Exception {
+        Users users = userRepository.getById(id);
+
         Expense expense = new Expense();
-        ResponseApi responseApi = new ResponseApi();
-        expense.setDescription(expenseRequest.getDescription());
-        expense.setTitle(expenseRequest.getTitle());
+        ResponseApi response = new ResponseApi();
         if (expenseRequest.getAmount()<=0) {
-            responseApi.setMessage("Invalid figure");
-        } else {
-            expense.setAmount(expenseRequest.getAmount());
+            response.setMessage("Invalid figure");
+            return response;
         }
-        responseApi.setData(expense);
-        return responseApi;
+            expense.setDescription(expenseRequest.getDescription());
+            expense.setTitle(expenseRequest.getTitle());
+            expense.setAmount(expenseRequest.getAmount());
+            expense.setFirstName(users.getFirstName());
+            expense.setLastName(users.getLastName());
+            expense.setUsers(users);
+           Expense expensedb = expenseRepository.save(expense);
+        response.setMessage("The record of your Expense has been created successfully");
+        response.setData(expensedb);
+        return response;
     }
 
     //for admin
@@ -46,11 +57,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public Expense getExpenseById(@PathVariable(value = "id") Long expenseId) {
         return this.expenseRepository.findById(expenseId).
-                orElseThrow(()-> new ResourceNotFoundException("Todo with ID" + expenseId +" not found"));
+                orElseThrow(()-> new ResourceNotFoundException("Expense with ID" + expenseId +" not found"));
     }
 
     @Override
     public List<Expense> getExpenseByUsers(Users users) {
-        return expenseRepository.findExpenseByUsers(users);
+        return expenseRepository.findAllByUsers(users);
     }
 }

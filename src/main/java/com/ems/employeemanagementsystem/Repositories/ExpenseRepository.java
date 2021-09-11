@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
+    List<Expense> findAllByUsers(Users users);
     List<Expense> findExpenseByUsers(Users users);
     Expense findAllById(Long id);
     Expense findExpenseByAmount(Long amount);

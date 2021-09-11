@@ -2,7 +2,9 @@ package com.ems.employeemanagementsystem.Endpoints;
 
 import com.ems.employeemanagementsystem.Models.Expense;
 import com.ems.employeemanagementsystem.Models.Users;
+import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.ExpenseRequest;
+import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Services.ServiceImplementation.ExpenseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,9 @@ public class ExpenseEndpoints {
     @Autowired
     private ExpenseServiceImpl expenseService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping("/all")
     public List<Expense> getAllTodos () {
         List<Expense> expenseList = expenseService.listAllExpense();
@@ -29,19 +34,21 @@ public class ExpenseEndpoints {
     }
 
     @RequestMapping("/{id}")
-    public Expense getTodosById (@PathVariable(value = "id") Long expenseId ) {
+    public Expense getExpenseById (@PathVariable(value = "id") Long expenseId ) {
         return this.expenseService.getExpenseById(expenseId);
     }
 
-    @RequestMapping("/users-expense")
-    public List<Expense> getTodosByUser(Users users) {
+    @RequestMapping("/users/{id}")
+    public List<Expense> getExpenseByUser(@PathVariable Long id) {
+    Users users = userRepository.getById(id);
         return this.expenseService.getExpenseByUsers(users);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> addTodos (@RequestBody ExpenseRequest expenseRequest) throws Exception {
-        expenseService.createExpense(expenseRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(expenseRequest);
+    @PostMapping("/create/{id}")
+    public ResponseEntity<ResponseApi> createExpense (@RequestBody ExpenseRequest expenseRequest, @PathVariable Long id) throws Exception {
+      ResponseApi responseApi=  expenseService.createExpense(expenseRequest, id);
+        System.out.println(responseApi.getData());
+      return ResponseEntity.status(HttpStatus.OK).body(responseApi);
     }
 
 }

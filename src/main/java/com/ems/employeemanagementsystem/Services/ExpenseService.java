@@ -10,7 +10,7 @@ import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import java.util.List;
 
 public interface ExpenseService {
-    ResponseApi createExpense(ExpenseRequest expenseRequest) throws Exception;
+    ResponseApi createExpense(ExpenseRequest expenseRequest, Long id) throws Exception;
     List<Expense> listAllExpense();
     Expense getExpenseById(Long id);
     List<Expense> getExpenseByUsers(Users users);
