@@ -3,6 +3,7 @@ package com.ems.employeemanagementsystem.Services.ServiceImplementation;
 import com.ems.employeemanagementsystem.Endpoints.TasksEndPoints;
 import com.ems.employeemanagementsystem.Exceptions.ResourceNotFoundException;
 import com.ems.employeemanagementsystem.Models.Task;
+import com.ems.employeemanagementsystem.Models.TaskEnum;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.TaskRepository;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
@@ -36,7 +37,7 @@ public class TaskServiceImpl implements TaskService {
         task.setLastName(users.getLastName());
         task.setTitle(taskRequest.getTitle());
         task.setDescription(taskRequest.getDescription());
-//        task.setStatus()
+        task.setTaskEnum(TaskEnum.OPEN);
         task.setUsers(users);
 
         var taskDb= taskRepository.save(task);

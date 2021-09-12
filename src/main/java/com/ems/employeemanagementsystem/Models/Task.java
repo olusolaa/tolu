@@ -20,10 +20,7 @@ public class Task extends BaseModel{
     private String firstName;
     private String lastName;
 
-    private enum status{
-        OPEN, PENDING, COMPLETED
-    }
-
+    private TaskEnum taskEnum;
     @JsonIgnore
     @ManyToOne
     private Users users;

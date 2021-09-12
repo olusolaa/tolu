@@ -15,5 +15,7 @@ public interface UserService {
     List<Users> getAllUsers();
     Optional<Users> getUserById(Long id);
     Users getUserByFirstName(String firstName);
+    Users getUserByFirstAndLastName(String firstName, String lastName);
+    Users getUserByLastName(String lastName);
 
 }

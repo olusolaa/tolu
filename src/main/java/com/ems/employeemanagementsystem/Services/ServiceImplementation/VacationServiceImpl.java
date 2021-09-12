@@ -10,8 +10,8 @@ import com.ems.employeemanagementsystem.Services.VacationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VacationServiceImpl implements VacationService {
@@ -23,8 +23,8 @@ public class VacationServiceImpl implements VacationService {
     private UserRepository userRepository;
 
     @Override
-    public Vacation getVacationById(Long id) {
-        return vacationRepository.getById(id);
+    public Optional<Vacation> getVacationById(Long id) {
+        return vacationRepository.findById(id);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class VacationServiceImpl implements VacationService {
 
         var vacationDb = vacationRepository.save(vacation);
         response.setMessage("Your vacation Request titled " +vacationRequest.getTitle()+
-                " "+ vacationRequest.getDuration()+ " days has been created");
+                " for"+ vacationRequest.getDuration()+ " days has been created");
         response.setData(vacationDb);
 
         return response;
@@ -53,7 +53,6 @@ public class VacationServiceImpl implements VacationService {
 
     @Override
     public List getVacationByUser(Users users) {
-
         return vacationRepository.findAllByUsers(users);
     }
 }

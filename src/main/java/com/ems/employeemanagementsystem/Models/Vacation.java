@@ -1,5 +1,6 @@
 package com.ems.employeemanagementsystem.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Vacation extends BaseModel{
     private Long duration;
     private String title;
 
+    @JsonIgnore
     @ManyToOne
     private Users users;
 }

@@ -68,6 +68,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users getUserByFirstName(String firstName) {
-        return userRepository.findByFirstName(firstName);
+        return userRepository.findAllByFirstName(firstName);
     }
+
+    @Override
+    public Users getUserByFirstAndLastName(String firstName, String lastName) {
+        return userRepository.findAllByFirstNameAndLastName(firstName, lastName);
+    }
+
+    @Override
+    public Users getUserByLastName(String lastName) {
+        return userRepository.findAllByLastName(lastName);
+    }
+
+
 }

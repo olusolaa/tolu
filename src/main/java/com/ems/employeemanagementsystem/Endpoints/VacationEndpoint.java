@@ -1,8 +1,8 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
+import com.ems.employeemanagementsystem.Exceptions.ResourceNotFoundException;
 import com.ems.employeemanagementsystem.Models.Vacation;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
-import com.ems.employeemanagementsystem.Repositories.VacationRepository;
 import com.ems.employeemanagementsystem.RequestEntities.VacationRequest;
 import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Services.ServiceImplementation.VacationServiceImpl;
@@ -24,9 +24,6 @@ public class VacationEndpoint {
     private VacationServiceImpl vacationService;
 
     @Autowired
-    private VacationRepository vacationRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @RequestMapping("/all")
@@ -37,7 +34,8 @@ public class VacationEndpoint {
 
     @RequestMapping("/{id}")
     public Vacation getVacationsById (@PathVariable(value = "id") Long vacationsId ) {
-        return this.vacationService.getVacationById(vacationsId);
+        return this.vacationService.getVacationById(vacationsId).
+                orElseThrow(()-> new ResourceNotFoundException("Task with ID" + vacationsId +" not found"));
     }
 
     @RequestMapping("/users/{id}")
