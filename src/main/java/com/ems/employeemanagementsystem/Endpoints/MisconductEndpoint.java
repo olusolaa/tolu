@@ -1,13 +1,10 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
-import com.ems.employeemanagementsystem.Models.Expense;
 import com.ems.employeemanagementsystem.Models.Misconduct;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
-import com.ems.employeemanagementsystem.RequestEntities.ExpenseRequest;
 import com.ems.employeemanagementsystem.RequestEntities.MisconductRequest;
 import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
-import com.ems.employeemanagementsystem.Services.ServiceImplementation.ExpenseServiceImpl;
 import com.ems.employeemanagementsystem.Services.ServiceImplementation.MisconductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +40,7 @@ public class MisconductEndpoint {
 
     @RequestMapping("/users/{id}")
     public List<Misconduct> getMisconductByUser(@PathVariable Long id) {
-        Users users = userRepository.getById(id);
+        var users = userRepository.findById(id).get();
         return this.misconductService.getMisconductByUsers(users);
     }
 

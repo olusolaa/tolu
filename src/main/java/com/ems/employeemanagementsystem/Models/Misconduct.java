@@ -1,5 +1,6 @@
 package com.ems.employeemanagementsystem.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,8 @@ public class Misconduct extends BaseModel{
         OPEN, PENDING, COMPLETED
     }
     private String status;
+
+    @JsonIgnore
     @ManyToOne
     private Users users;
 }

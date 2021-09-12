@@ -44,7 +44,7 @@ public class AuthEndpoints {
     @PostMapping("/create")
     public  ResponseEntity<?> signup (@RequestBody SignupRequest signupRequest){
         Users user = userService.signup(signupRequest);
-        return new ResponseEntity<>("Successful", HttpStatus.OK);
+        return new ResponseEntity<>("Signup Successful", HttpStatus.OK);
     }
 
     //method lists all created users

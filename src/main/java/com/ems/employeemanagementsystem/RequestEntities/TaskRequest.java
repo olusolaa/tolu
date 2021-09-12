@@ -12,6 +12,8 @@ import lombok.Setter;
 public class TaskRequest {
     private String title;
     private String description;
+    private String firstName;
+    private String lastName;
     private enum status{
         OPEN, PENDING, COMPLETED
     }
