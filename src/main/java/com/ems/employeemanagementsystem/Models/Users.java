@@ -1,6 +1,6 @@
 package com.ems.employeemanagementsystem.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,9 @@ import java.util.List;
 public class Users extends BaseModel{
     private String firstName;
     private String lastName;
+
     private String username;
+
     @Column(unique = true)
     private String email;
     private String password;

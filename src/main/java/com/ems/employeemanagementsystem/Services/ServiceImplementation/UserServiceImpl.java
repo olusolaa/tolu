@@ -5,6 +5,7 @@ import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.ActivateRequest;
 import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;
+import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,17 +25,52 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users signup(SignupRequest signupRequest) {
+    public ResponseApi signup(SignupRequest signupRequest) {
         Users users = new Users();
+        var response = new ResponseApi();
+
+        if (signupRequest.getUsername()==null) {
+            response.setMessage("Username cannot be empty");
+            return response;
+        }
+        if (signupRequest.getEmail()==null) {
+            response.setMessage("Email is required");
+            return response;
+        }
+        if (signupRequest.getPhone()==null) {
+            response.setMessage("Phone Number is required");
+            return response;
+        }
+        if (signupRequest.getFirstName()==null) {
+            response.setMessage("Please supply your First Name");
+            return response;
+        }
+        if (signupRequest.getPassword()==null) {
+            response.setMessage("Please supply a password");
+            return response;
+        }
+        if (signupRequest.getPin()==null) {
+            response.setMessage("Please supply a pin Number");
+            return response;
+        }
+
+
+
         users.setFirstName(signupRequest.getFirstName());
         users.setLastName(signupRequest.getLastName());
         users.setEmail(signupRequest.getEmail());
         users.setPassword(signupRequest.getPassword());
         users.setPhone(signupRequest.getPhone());
+        users.setUsername(signupRequest.getUsername());
         users.setPin(signupRequest.getPin());
+
         users.setUserEnum(UserEnum.ADMIN);
 
-       return userRepository.save(users);
+        userRepository.save(users);
+
+        response.setMessage("User created Successfully");
+        response.setData(users);
+        return response;
 
     }
 

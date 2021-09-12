@@ -4,6 +4,7 @@ import com.ems.employeemanagementsystem.Exceptions.UserUnauthorised;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.RequestEntities.LoginRequest;
 import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;
+import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Services.ServiceImplementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,9 +43,9 @@ public class UserEndpoints {
 
     //create a user
     @PostMapping("/create")
-    public  ResponseEntity<?> signup (@RequestBody SignupRequest signupRequest){
-        Users user = userService.signup(signupRequest);
-        return new ResponseEntity<>("Signup Successful", HttpStatus.OK);
+    public  ResponseEntity<ResponseApi> signup (@RequestBody SignupRequest signupRequest){
+        ResponseApi response=  userService.signup(signupRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     //method lists all created users
@@ -77,7 +78,4 @@ public class UserEndpoints {
         Users user = userService.getUserByLastName(lastName);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
-
-
-
 }
