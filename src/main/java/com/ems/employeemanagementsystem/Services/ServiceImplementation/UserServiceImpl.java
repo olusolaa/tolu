@@ -90,10 +90,7 @@ public class UserServiceImpl implements UserService {
             response.setMessage("Please supply a password");
             return response;
         }
-        if (signupRequest.getPin() == null) {
-            response.setMessage("Please supply a pin Number");
-            return response;
-        }
+
         if (userRepository.findByEmail(signupRequest.getEmail()).isPresent()) {
             response.setMessage("User with email" + signupRequest.getEmail() + " already exists, please supply a new email");
             return response;
@@ -109,7 +106,6 @@ public class UserServiceImpl implements UserService {
         users.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         users.setPhone(signupRequest.getPhone());
         users.setUsername(signupRequest.getUsername());
-        users.setPin(signupRequest.getPin());
         Roles userRole = roleRepository.findByRoleEnum(RoleEnum.EMPLOYEE)
                 .orElseThrow(() -> new ResourceNotFoundException("Role not set"));
         users.getRoles().add(userRole);

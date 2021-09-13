@@ -29,7 +29,6 @@ public class Users extends BaseModel{
     private String password;
     private String address;
     private String phone;
-    private String pin;
     private  Long Salary;
     private boolean activated;
 

@@ -12,6 +12,5 @@ import lombok.Setter;
 public class Employee {
     private String email;
     private String password;
-    private Long pin;
     private String phone;
 }
