@@ -1,7 +1,6 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
 import com.ems.employeemanagementsystem.Models.Misconduct;
-import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.MisconductRequest;
 import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;

@@ -1,8 +1,8 @@
 package com.ems.employeemanagementsystem.config;
+
 import com.ems.employeemanagementsystem.Models.Users;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

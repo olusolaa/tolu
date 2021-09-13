@@ -1,9 +1,7 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
-import com.ems.employeemanagementsystem.Models.Misconduct;
 import com.ems.employeemanagementsystem.Models.Payroll;
 import com.ems.employeemanagementsystem.Models.Users;
-import com.ems.employeemanagementsystem.Repositories.PayrollRepository;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.PayrollRequest;
 import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;

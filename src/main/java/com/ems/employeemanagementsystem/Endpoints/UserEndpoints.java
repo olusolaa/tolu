@@ -1,6 +1,5 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
-import com.ems.employeemanagementsystem.Exceptions.UserUnauthorised;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.RequestEntities.LoginRequest;
 import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;

@@ -1,7 +1,6 @@
 package com.ems.employeemanagementsystem.Services.ServiceImplementation;
 
 import com.ems.employeemanagementsystem.Exceptions.ResourceNotFoundException;
-import com.ems.employeemanagementsystem.Models.Expense;
 import com.ems.employeemanagementsystem.Models.Payroll;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.PayrollRepository;

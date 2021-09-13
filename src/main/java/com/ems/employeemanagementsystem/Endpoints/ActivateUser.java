@@ -1,6 +1,5 @@
 package com.ems.employeemanagementsystem.Endpoints;
 
-import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.RequestEntities.ActivateRequest;
 import com.ems.employeemanagementsystem.Services.ServiceImplementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

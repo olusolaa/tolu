@@ -1,8 +1,6 @@
 package com.ems.employeemanagementsystem.Services.ServiceImplementation;
 
 import com.ems.employeemanagementsystem.Exceptions.ResourceNotFoundException;
-import com.ems.employeemanagementsystem.Models.Admin;
-import com.ems.employeemanagementsystem.Models.Employee;
 import com.ems.employeemanagementsystem.Models.Expense;
 import com.ems.employeemanagementsystem.Models.Users;
 import com.ems.employeemanagementsystem.Repositories.ExpenseRepository;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
