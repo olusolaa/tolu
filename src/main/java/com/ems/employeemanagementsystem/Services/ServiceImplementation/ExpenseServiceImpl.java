@@ -10,10 +10,12 @@ import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.ExpenseRequest;
 import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
 import com.ems.employeemanagementsystem.Services.ExpenseService;
+import com.ems.employeemanagementsystem.config.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,10 +28,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public ResponseApi createExpense(ExpenseRequest expenseRequest, Long id) throws Exception {
-        Users users = userRepository.getById(id);
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
+    @Override
+    public ResponseApi createExpense(ExpenseRequest expenseRequest, HttpServletRequest request) throws Exception {
+        Users users = jwtTokenProvider.resolveUser(request).get();
         Expense expense = new Expense();
         ResponseApi response = new ResponseApi();
         if (expenseRequest.getAmount()<=0) {

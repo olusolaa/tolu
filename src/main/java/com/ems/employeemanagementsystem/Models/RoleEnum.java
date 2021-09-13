@@ -1,6 +1,6 @@
 package com.ems.employeemanagementsystem.Models;
 
 
-public enum UserEnum{
+public enum RoleEnum {
         ADMIN, EMPLOYEE
 }

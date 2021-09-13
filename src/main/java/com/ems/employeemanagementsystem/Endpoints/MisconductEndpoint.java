@@ -9,6 +9,7 @@ import com.ems.employeemanagementsystem.Services.ServiceImplementation.Misconduc
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,7 @@ public class MisconductEndpoint {
     @Autowired
     private UserRepository userRepository;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping("/all")
     public List<Misconduct> getAllMisconducts () {
         List<Misconduct> misconductList = misconductService.listAllMisconducts();
@@ -38,14 +40,16 @@ public class MisconductEndpoint {
         return this.misconductService.getMisconductById(misconductId);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping("/users/{id}")
     public List<Misconduct> getMisconductByUser(@PathVariable Long id) {
         var users = userRepository.findById(id).get();
         return this.misconductService.getMisconductByUsers(users);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create/{id}")
-    public ResponseEntity<ResponseApi> createExpense (@RequestBody MisconductRequest misconductRequest, @PathVariable Long id) throws Exception {
+    public ResponseEntity<ResponseApi> createMisconduct (@RequestBody MisconductRequest misconductRequest, @PathVariable Long id) throws Exception {
         ResponseApi responseApi=  misconductService.createMisconduct(misconductRequest, id);
         return ResponseEntity.status(HttpStatus.OK).body(responseApi);
     }

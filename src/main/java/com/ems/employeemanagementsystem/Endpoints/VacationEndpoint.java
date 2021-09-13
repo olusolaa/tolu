@@ -9,6 +9,7 @@ import com.ems.employeemanagementsystem.Services.ServiceImplementation.VacationS
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ public class VacationEndpoint {
     @Autowired
     private UserRepository userRepository;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping("/all")
     public List<Vacation> getAllVacations () {
         var vacationList = vacationService.listAllVacation();
@@ -45,7 +47,7 @@ public class VacationEndpoint {
     }
 
     @PostMapping("/create/{id}")
-    public ResponseEntity<ResponseApi> createTasks (@RequestBody VacationRequest vacationRequest, @PathVariable Long id) throws Exception {
+    public ResponseEntity<ResponseApi> createVacation (@RequestBody VacationRequest vacationRequest, @PathVariable Long id) throws Exception {
         ResponseApi responseApi=  vacationService.createVacationRequest(vacationRequest, id);
         return ResponseEntity.status(HttpStatus.OK).body(responseApi);
     }

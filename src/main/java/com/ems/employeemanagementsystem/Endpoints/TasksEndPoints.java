@@ -8,6 +8,7 @@ import com.ems.employeemanagementsystem.Services.ServiceImplementation.TaskServi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ public class TasksEndPoints {
     @Autowired
     private UserRepository userRepository;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping("/all")
     public List<Task> getAllTasks () {
         List<Task> taskList = taskService.listAllTasks();
@@ -43,6 +45,7 @@ public class TasksEndPoints {
         return this.taskService.getTasksByUser(users);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create/{id}")
     public ResponseEntity<ResponseApi> createTasks (@RequestBody TaskRequest taskRequest, @PathVariable Long id) throws Exception {
         ResponseApi responseApi=  taskService.createTask(taskRequest, id);

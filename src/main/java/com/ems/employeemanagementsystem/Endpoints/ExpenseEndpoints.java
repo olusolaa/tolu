@@ -9,12 +9,14 @@ import com.ems.employeemanagementsystem.Services.ServiceImplementation.ExpenseSe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -27,6 +29,7 @@ public class ExpenseEndpoints {
     @Autowired
     private UserRepository userRepository;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping("/all")
     public List<Expense> getAllExpense () {
         List<Expense> expenseList = expenseService.listAllExpense();
@@ -44,10 +47,10 @@ public class ExpenseEndpoints {
         return this.expenseService.getExpenseByUsers(users);
     }
 
+    @PreAuthorize("hasAuthority('EMPLOYEE')")
     @PostMapping("/create/{id}")
-    public ResponseEntity<ResponseApi> createExpense (@RequestBody ExpenseRequest expenseRequest, @PathVariable Long id) throws Exception {
-      ResponseApi responseApi=  expenseService.createExpense(expenseRequest, id);
-        System.out.println(responseApi.getData());
+    public ResponseEntity<ResponseApi> createExpense (@RequestBody ExpenseRequest expenseRequest, HttpServletRequest request) throws Exception {
+      ResponseApi responseApi=  expenseService.createExpense(expenseRequest, request);
       return ResponseEntity.status(HttpStatus.OK).body(responseApi);
     }
 

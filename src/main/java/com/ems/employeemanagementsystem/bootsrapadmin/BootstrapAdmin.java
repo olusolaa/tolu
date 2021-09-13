@@ -1,14 +1,15 @@
 package com.ems.employeemanagementsystem.bootsrapadmin;
 
+import com.ems.employeemanagementsystem.Models.RoleEnum;
 import com.ems.employeemanagementsystem.Models.Roles;
-import com.ems.employeemanagementsystem.Models.UserEnum;
 import com.ems.employeemanagementsystem.Models.Users;
+import com.ems.employeemanagementsystem.Repositories.RoleRepository;
 import com.ems.employeemanagementsystem.Repositories.UserRepository;
-import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;
 import com.ems.employeemanagementsystem.Services.ServiceImplementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,12 +23,16 @@ import java.util.List;
 public class BootstrapAdmin implements ApplicationListener<ContextRefreshedEvent> {
     private boolean dataAlreadySetup = false;
     private final UserServiceImpl employeeService;
-    private UserRepository employeeRepository;
+    private final UserRepository employeeRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public BootstrapAdmin(UserServiceImpl employeeService, UserRepository employeeRepository) {
+    public BootstrapAdmin(UserServiceImpl employeeService, UserRepository employeeRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.employeeService = employeeService;
         this.employeeRepository = employeeRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -42,11 +47,19 @@ public class BootstrapAdmin implements ApplicationListener<ContextRefreshedEvent
         admin.setEmail("toluwaset@gmail.com");
         admin.setFirstName("Tee");
         admin.setLastName("tom");
-        admin.setPassword("toluwase");
+        admin.setPassword(passwordEncoder.encode("toluwase"));
         admin.setPin("1234");
         admin.setPhone("123356768");
         admin.setUsername("tol");
-        admin.setUserEnum(UserEnum.ADMIN);
+
+        Roles role1 = new Roles(RoleEnum.ADMIN);
+        Roles role2 = new Roles(RoleEnum.EMPLOYEE);
+
+        roleRepository.save(role2);
+        Roles roledb = roleRepository.save(role1);
+
+
+        admin.setRoles(List.of(roledb));
         employeeRepository.save(admin);
         dataAlreadySetup =   true;
     }

@@ -19,6 +19,7 @@ public class ActivateUser {
     @Autowired
     private UserServiceImpl userService;
 
+
     @PostMapping("/activate/{id}")
     public ResponseEntity<?> activateUser (@RequestBody ActivateRequest  activateRequest, @PathVariable Long id){
         userService.activateUser(activateRequest, id);

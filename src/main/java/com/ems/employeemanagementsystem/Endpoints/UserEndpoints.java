@@ -9,6 +9,7 @@ import com.ems.employeemanagementsystem.Services.ServiceImplementation.UserServi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,16 +30,7 @@ public class UserEndpoints {
 
     @PostMapping("/login")
     public  ResponseEntity<?> login (@RequestBody LoginRequest loginRequest) throws UserPrincipalNotFoundException {
-        Users users = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
-
-        if(users == null){
-            throw new UserPrincipalNotFoundException("User details not correct");
-        }
-        if (!users.isActivated()) {
-            throw new UserUnauthorised("Account Inactive, Please contact Admin");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(users);
+        return userService.login(loginRequest.getEmail(), loginRequest.getPassword());
     }
 
     //create a user
@@ -49,8 +41,10 @@ public class UserEndpoints {
     }
 
     //method lists all created users
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all")
     public List<Users> getAllUsers() {
+        System.err.println("i AMMHVDSOCJUBNVHCKB");
         return this.userService.getAllUsers();
     }
 
