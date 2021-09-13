@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class AttendanceEndpoint {
     @Autowired
     private AttendanceServiceImpl attendanceService;

@@ -45,7 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/**/*.svg",  "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js")
                     .antMatchers("/user/create")
                     .antMatchers("/user/login")
-                    .antMatchers("/user/activate/{id}");
+                    .antMatchers("/user/activate/{id}")
+                    .antMatchers("/swagger-ui.html")
+//                    .antMatchers("/v3/api-docs/**")
+                    .antMatchers("/swagger-ui/**")
+            .antMatchers("/swagger-resources/**", "/v2/api-docs/**" ,"/api-doc","/webjars/**")
+            ;
         }
 
     @Override
