@@ -48,7 +48,6 @@ public class BootstrapAdmin implements ApplicationListener<ContextRefreshedEvent
         admin.setFirstName("Tee");
         admin.setLastName("tom");
         admin.setPassword(passwordEncoder.encode("toluwase"));
-        admin.setPin("1234");
         admin.setPhone("123356768");
         admin.setUsername("tol");
 

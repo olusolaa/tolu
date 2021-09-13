@@ -29,13 +29,13 @@ public class MisconductEndpoint {
     private UserRepository userRepository;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping("/all")
+    @GetMapping("/all")
     public List<Misconduct> getAllMisconducts () {
         List<Misconduct> misconductList = misconductService.listAllMisconducts();
         return misconductList;
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Misconduct getMisconductById (@PathVariable(value = "id") Long misconductId ) {
         return this.misconductService.getMisconductById(misconductId);
     }
