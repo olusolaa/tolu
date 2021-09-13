@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,18 +36,18 @@ public class PayrollEndPoints {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping("/all")
+    @GetMapping("/all")
     public List<Payroll> getAllPayroll () {
         List<Payroll> payrollList = payrollService.listAllPayroll();
         return payrollList;
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Payroll getPayrollById (@PathVariable(value = "id") Long payrollId ) {
         return this.payrollService.getPayrollById(payrollId);
     }
 
-    @RequestMapping("/users/{id}")
+    @GetMapping("/users/{id}")
     public List<Payroll> getPayrollByUser(@PathVariable Long id) {
         Users users = userRepository.getById(id);
         return this.payrollService.getPayrollByUsers(users);

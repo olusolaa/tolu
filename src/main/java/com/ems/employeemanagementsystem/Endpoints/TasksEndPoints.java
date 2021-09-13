@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,18 +29,18 @@ public class TasksEndPoints {
     private UserRepository userRepository;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping("/all")
+    @GetMapping("/all")
     public List<Task> getAllTasks () {
         List<Task> taskList = taskService.listAllTasks();
         return taskList;
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Task getTasksById (@PathVariable(value = "id") Long tasksId ) {
         return this.taskService.getTasksById(tasksId);
     }
 
-    @RequestMapping("/users/{id}")
+    @GetMapping("/users/{id}")
     public List<Task> getTasksByUser(@PathVariable Long id) {
         var users = userRepository.findById(id).get();
         return this.taskService.getTasksByUser(users);

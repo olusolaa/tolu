@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,18 +31,18 @@ public class ExpenseEndpoints {
     private UserRepository userRepository;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @RequestMapping("/all")
+    @GetMapping("/all")
     public List<Expense> getAllExpense () {
         List<Expense> expenseList = expenseService.listAllExpense();
         return expenseList;
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Expense getExpenseById (@PathVariable(value = "id") Long expenseId ) {
         return this.expenseService.getExpenseById(expenseId);
     }
 
-    @RequestMapping("/users/{id}")
+    @GetMapping("/users/{id}")
     public List<Expense> getExpenseByUser(@PathVariable Long id) {
     Users users = userRepository.getById(id);
         return this.expenseService.getExpenseByUsers(users);
