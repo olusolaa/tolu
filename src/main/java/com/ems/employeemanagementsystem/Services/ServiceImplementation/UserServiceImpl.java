@@ -10,10 +10,12 @@ import com.ems.employeemanagementsystem.Repositories.UserRepository;
 import com.ems.employeemanagementsystem.RequestEntities.ActivateRequest;
 import com.ems.employeemanagementsystem.RequestEntities.SignupRequest;
 import com.ems.employeemanagementsystem.ResponseBody.ResponseApi;
+import com.ems.employeemanagementsystem.ResponseBody.UserResponseBody;
 import com.ems.employeemanagementsystem.Services.UserService;
 import com.ems.employeemanagementsystem.config.JwtAuthenticationResponse;
 import com.ems.employeemanagementsystem.config.JwtTokenProvider;
 import com.ems.employeemanagementsystem.config.UserDetailsServiceImpl;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,11 +55,13 @@ public class UserServiceImpl implements UserService {
                     new UsernamePasswordAuthenticationToken(email, password)
             );
             Optional<Users> user = userRepository.findByEmail(email);
+//            var response = new ResponseApi();
             if (!user.get().isActivated()) {
+//                response.setMessage("Account Inactive, Please Activate Account or Please contact Admin");
                 throw new UserUnauthorised("Account Inactive, Please contact Admin");
             }
             final String jwt = jwtTokenProvider.generateToken(user.get().getEmail());
-            return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+            return ResponseEntity.ok(new UserResponseBody(jwt, user.get()));
         } catch (BadCredentialsException e) {
             throw new UserUnauthorised("Incorrect email or password");
         }
