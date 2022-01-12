@@ -53,13 +53,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             ;
         }
 
+//         http.csrf().disable();
+//    // No session will be created or used by spring security
+//        http.cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Disable CSRF (cross site request forgery)
         // enabled by default
-        http.csrf().disable();
+        http.csrf();
         // No session will be created or used by spring security
-        http.cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors();
         // set authentication policies for each routes
         http.authorizeRequests().anyRequest().authenticated();
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
